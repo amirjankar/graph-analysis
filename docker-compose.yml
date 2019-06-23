@@ -1,0 +1,35 @@
+# WARNING: this file is not suitable for production, please use with caution
+version: '3'
+
+services:
+  api:
+    image: flack
+    hostname: api
+    build:
+      context: .
+      dockerfile: ./flack/deploy/Dockerfile
+    command: gunicorn flack.wsgi --worker-class eventlet --bind 0.0.0.0:5000 --log-level info --reload
+    volumes:
+      - ./flack:/code/flack
+      - ./db/:/db/
+    ports:
+      - "5000:5000"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  celery:
+    image: flack
+    command: python manage.py celery
+    volumes:
+      - .:/code
+    depends_on:
+      - api
+      - redis
+
+  neo4j:
+    image: neo4j:latest
+    ports:
+    - "17474:7474"

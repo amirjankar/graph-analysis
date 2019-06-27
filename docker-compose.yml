@@ -4,11 +4,10 @@ version: '3'
 services:
   api:
     image: flack
-    hostname: api
     build:
       context: .
       dockerfile: ./flack/deploy/Dockerfile
-    command: gunicorn flack.wsgi --worker-class eventlet --bind 0.0.0.0:5000 --log-level info --reload
+    command: python manage.py runserver
     volumes:
       - ./flack:/code/flack
       - ./db/:/db/
@@ -22,9 +21,12 @@ services:
 
   celery:
     image: flack
+    build:
+      context: .
+      dockerfile: ./flack/deploy/Dockerfile
     command: python manage.py celery
     volumes:
-      - .:/code
+      - ./flack:/code/flack
     depends_on:
       - api
       - redis
@@ -32,4 +34,5 @@ services:
   neo4j:
     image: neo4j:latest
     ports:
-    - "17474:7474"
+      - "7687:7687"
+      - "17474:7474"

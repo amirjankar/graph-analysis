@@ -1,0 +1,38 @@
+# WARNING: this file is not suitable for production, please use with caution
+version: '3'
+
+services:
+  api:
+    image: flack
+    build:
+      context: .
+      dockerfile: ./flack/deploy/Dockerfile
+    command: python manage.py runserver
+    volumes:
+      - ./flack:/code/flack
+      - ./db/:/db/
+    ports:
+      - "5000:5000"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  celery:
+    image: flack
+    build:
+      context: .
+      dockerfile: ./flack/deploy/Dockerfile
+    command: python manage.py celery
+    volumes:
+      - ./flack:/code/flack
+    depends_on:
+      - api
+      - redis
+
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7687:7687"
+      - "17474:7474"

@@ -4,6 +4,8 @@ import unittest
 
 import coverage
 
+#from .tests import FlackTests
+from .twitter import TestTwitterStream
 
 def run():
     os.environ['FLACK_CONFIG'] = 'testing'
@@ -22,3 +24,6 @@ def run():
     cov.report(omit=['manage.py', 'tests/*', 'venv*/*'])
 
     sys.exit(0 if ok else 1)
+
+if __name__ == "__main__":
+    unittest.main()

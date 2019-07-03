@@ -26,8 +26,8 @@ Flask-HTTPAuth
 Flask-Script 
 Flask-SocketIO 
 Flask-SQLAlchemy 
-#gevent 
-#greenlet 
+gevent 
+greenlet 
 gunicorn 
 html5lib 
 httpie 
@@ -49,6 +49,10 @@ redis
 requests 
 six 
 SQLAlchemy 
-#uWSGI 
+uWSGI 
 visitor 
 Werkzeug 
+
+
+# src
+tweepy

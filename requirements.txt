@@ -39,6 +39,7 @@ MarkupSafe
 mccabe 
 mock 
 pbr  
+
 pep8 
 pyflakes 
 Pygments 
@@ -56,3 +57,4 @@ Werkzeug
 
 # src
 tweepy
+pika

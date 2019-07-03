@@ -12,12 +12,12 @@ services:
       - ./flack:/code/flack
       - ./db/:/db/
     ports:
-      - "5000:5000"
+      - "15000:5000"
 
-  redis:
-    image: redis
+  rabbitmq:
+    image: rabbitmq
     ports:
-      - "6379:6379"
+      - "15672:5672"
 
   celery:
     image: flack
@@ -29,7 +29,7 @@ services:
       - ./flack:/code/flack
     depends_on:
       - api
-      - redis
+      - rabbitmq
 
   neo4j:
     image: neo4j:latest
@@ -50,5 +50,5 @@ services:
     depends_on:
       - api
       - celery
-      - redis
+      - rabbitmq
       - neo4j

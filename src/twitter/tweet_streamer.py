@@ -1,16 +1,25 @@
-from tweepy import OAuthHandler, Stream, API, Cursor, Status, User
-from tweepy.streaming import StreamListener
+import sys
+import os
+import logging
+import json
+import pika
+from tweepy import OAuthHandler, StreamListener
+
+from src.utilities import RabbitConnection
 
 class TweepyStreamingInterface:
-    def __init__(self, **kwargs):
+    def __init__(self, auth_config):
         # TODO list out kwargs once final
-        self.auth_config = kwargs 
+        self.auth_config = auth_config 
         self.data = self.cache = iter([])
+        
         try:
             self._connect()
             print('connected') # replace with logging
         except Error as e:
             print(e)
+
+        self.publisher = RabbitConnection()
 
     def __iter__(self):
         import itertools as it

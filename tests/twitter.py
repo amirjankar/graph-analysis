@@ -4,6 +4,7 @@ import unittest
 import dotenv
 
 from src.twitter import TweepyStreamingInterface
+from src.utilities import RabbitConnection
 
 class TestTwitterStream(unittest.TestCase):
     def setUp(self):
@@ -19,8 +20,20 @@ class TestTwitterStream(unittest.TestCase):
             'ACCESS_TOKEN_SECRET': os.environ.get('ACCESS_TOKEN_SECRET')
         }
 
-        self.api = TweepyStreamingInterface(**auth_config)
+        self.api = TweepyStreamingInterface(auth_config)
 
 
     def test_interface_login(self):
         self.assertTrue(self.api._connect())
+
+class TestRabbitConn(unittest.TestCase):
+    def setUp(self):
+        self.connection = RabbitConnection()
+
+    def test_rabbit_send_receive():
+        send = self.connection.send("test", "test")
+        print(self.connection.logging)
+        self.assertIsNotNone(send)
+        receive = self.connection.receive("test", print)
+        print(self.connection.logging)
+        self.assertIsNotNone(send)

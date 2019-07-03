@@ -36,3 +36,19 @@ services:
     ports:
       - "7687:7687"
       - "17474:7474"
+
+  tests:
+    image: flack
+    build:
+      context: .
+      dockerfile: ./flack/deploy/Dockerfile
+    command: "python -m unittest tests -vvv"
+    volumes:
+      - ./flack:/code/flack
+      - ./tests:/code/tests
+      - ./src:/code/src
+    depends_on:
+      - api
+      - celery
+      - redis
+      - neo4j

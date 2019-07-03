@@ -232,11 +232,7 @@ class TweetMgr():
     #All the oauth funtimes
     #Generates the access needed
     def __init__(self):
-        consumer_key='D79sbuNtC8HnlWj1KHBXVUC6w'
-        consumer_secret='pemB8Zyrxliudx8jzbhbCJAAK8y9HBB8jMy4Sv8WLOSXCNm6a1'
-        access_token_key='927329315624243200-14vAfc8hicYAw7TWj0BUSx7PXWXs8NA'
-        access_token_secret='tOANGtculBkGo5rtRlGlWPHHx1ZRsbqp7YT2dTXaDye8G'
-        self.auth = OAuthHandler(consumer_key, consumer_secret)
+       self.auth = OAuthHandler(consumer_key, consumer_secret)
         self.auth.set_access_token(access_token_key, access_token_secret)
         
 #Test stuff
